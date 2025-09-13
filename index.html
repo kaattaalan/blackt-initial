@@ -4,28 +4,130 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>black-T</title>
+    <!-- Load Tailwind CSS from CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
         body {
             font-family: 'Inter', sans-serif;
+            background-color: #000; /* Black background */
+        }
+
+        .brutalist-door-bg {
+            background-color: #111; /* Slightly lighter black for contrast */
+            background-image:
+                /* Main angular lines, now with a light glow */
+                linear-gradient(28deg, transparent 55%, rgba(209, 213, 219, 0.1) 55.5%, rgba(209, 213, 219, 0.1) 56%, transparent 56.5%),
+                linear-gradient(-28deg, transparent 55%, rgba(209, 213, 219, 0.1) 55.5%, rgba(209, 213, 219, 0.1) 56%, transparent 56.5%),
+                linear-gradient(120deg, transparent 40%, rgba(209, 213, 219, 0.1) 40.5%, rgba(209, 213, 219, 0.1) 41%, transparent 41.5%),
+                linear-gradient(150deg, transparent 65%, rgba(209, 213, 219, 0.1) 65.5%, rgba(209, 213, 219, 0.1) 66%, transparent 66.5%),
+                linear-gradient(90deg, transparent 50%, rgba(209, 213, 219, 0.1) 50.5%, rgba(209, 213, 219, 0.1) 51%, transparent 51.5%);
         }
     </style>
 </head>
-<body class="bg-black text-white flex items-center justify-center min-h-screen p-8">
+<body class="brutalist-door-bg text-white antialiased">
 
-    <div class="max-w-4xl mx-auto text-center">
-        <h1 class="text-7xl font-bold tracking-widest mb-4">black-T</h1>
-        <!-- Using a placeholder image since local files cannot be displayed directly -->
-        <p class="text-xl leading-relaxed mb-6">
-            At **black-T**, we're not just selling t-shirts; we're launching a revolution. For too long, the fashion world has been dominated by a kaleidoscope of colors, but we've dared to challenge the status quo. We believe in the power, elegance, and timelessness of black.
-        </p>
-        <p class="text-xl leading-relaxed">
-            Our brand is built on a single, audacious idea: the world's first-ever line of exclusively black t-shirts. This isn't just about a color; it's about a statement. It's about simplicity, sophistication, and a bold departure from the ordinary. We've meticulously crafted each piece with the deepest, richest black dye and the finest materials, creating a garment that is both incredibly stylish and unbelievably comfortable. Join the movement and experience the unparalleled impact of a truly black t-shirt.
-        </p>
+    <!-- Main container for the landing page -->
+    <div id="landing-page" class="min-h-screen flex items-center justify-center p-4 sm:p-8">
+        <div class="w-full max-w-2xl text-center space-y-8">
+            <!-- Brand Logo/Title -->
+            <h1 class="text-6xl sm:text-8xl md:text-9xl font-bold uppercase tracking-tighter transition-colors duration-300">
+                black-T
+            </h1>
+
+            <!-- Subtitle/Slogan -->
+            <p class="text-base sm:text-xl font-medium tracking-wide leading-relaxed">
+                A bold statement in minimalist form.
+                <br class="hidden sm:block">
+                For those who dare to stand out by stripping back.
+            </p>
+
+            <!-- Product Call-to-Action -->
+            <div class="pt-6">
+                <a href="#" id="discover-button" class="inline-block px-8 py-3 text-base sm:text-lg font-bold uppercase transition-all duration-300 border-2 border-white text-white hover:bg-white hover:text-black focus:outline-none focus:ring-2 focus:ring-white focus:ring-opacity-50 focus:ring-offset-2 focus:ring-offset-black">
+                    Discover Our Collection
+                </a>
+            </div>
+        </div>
     </div>
 
+    <!-- Image Gallery Section (Hidden by default) -->
+    <div id="gallery-page" class="hidden min-h-screen p-4 sm:p-8">
+        <div class="w-full max-w-5xl mx-auto space-y-8">
+            <div class="flex items-center justify-between">
+                <a href="#" id="back-button" class="text-white text-lg font-bold uppercase hover:underline">
+                    &larr; Back
+                </a>
+                <h2 class="text-3xl sm:text-4xl font-bold uppercase tracking-tighter text-center">Collection</h2>
+                <div></div> <!-- Placeholder to balance the flexbox -->
+            </div>
+
+            <!-- Image Grid -->
+            <div id="image-grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                <!-- Images will be injected here by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const landingPage = document.getElementById('landing-page');
+            const galleryPage = document.getElementById('gallery-page');
+            const discoverButton = document.getElementById('discover-button');
+            const backButton = document.getElementById('back-button');
+            const imageGrid = document.getElementById('image-grid');
+
+            // Array of image filenames. Replace these with your actual files.
+            // For a production GitHub Pages site, this path would be relative to the root.
+            const imageFiles = [
+                't-shirt-1.jpg',
+                't-shirt-2.jpg',
+                't-shirt-3.jpg',
+                't-shirt-4.jpg',
+                't-shirt-5.jpg',
+                't-shirt-6.jpg',
+                't-shirt-7.jpg',
+                't-shirt-8.jpg'
+            ];
+
+            // Function to dynamically load images into the grid
+            function loadImages() {
+                // Clear any existing images
+                imageGrid.innerHTML = '';
+                
+                // Loop through the image filenames and create img elements
+                imageFiles.forEach(fileName => {
+                    const img = document.createElement('img');
+                    img.src = fileName;
+                    img.alt = `Product image for ${fileName}`;
+                    img.className = 'w-full rounded-lg transition-transform duration-200 transform hover:scale-105';
+                    img.onerror = () => {
+                        // Use a placeholder if the image fails to load
+                        img.src = 'https://placehold.co/600x600/111111/D1D5DB?text=Image+Not+Found';
+                    };
+                    imageGrid.appendChild(img);
+                });
+            }
+
+            // Function to show the gallery
+            function showGallery(e) {
+                e.preventDefault();
+                loadImages(); // Call the function to load the images
+                landingPage.classList.add('hidden');
+                galleryPage.classList.remove('hidden');
+            }
+
+            // Function to show the landing page
+            function showLandingPage(e) {
+                e.preventDefault();
+                galleryPage.classList.add('hidden');
+                landingPage.classList.remove('hidden');
+            }
+
+            // Event listeners
+            discoverButton.addEventListener('click', showGallery);
+            backButton.addEventListener('click', showLandingPage);
+        });
+    </script>
 </body>
 </html>
